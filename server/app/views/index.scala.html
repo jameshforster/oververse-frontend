@@ -1,0 +1,12 @@
+@(message: String, userDetailsModel: Option[UserDetailsModel])(implicit request: Request[_])
+
+@main("Play with Scala.js", userDetailsModel) {
+<h2>Play and Scala.js share a same message</h2>
+<ul>
+  <li>Play shouts out: <span>@message</span></li>
+  <li>Scala.js shouts out: <span id="scalajsShoutOut"></span></li>
+  @{ if (userDetailsModel.isDefined)
+    <li>Username: @{userDetailsModel.get.username}</li>
+  }
+</ul>
+}

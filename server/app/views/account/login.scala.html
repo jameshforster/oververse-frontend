@@ -1,0 +1,17 @@
+@(loginForm: Form[LoginModel], destination: String)(implicit request: Request[_], messagesProvider: MessagesProvider)
+
+@main("Login", None) {
+
+    <h2>Login</h2>
+
+    @helper.form(controllers.routes.LoginController.postLogin(destination)) {
+
+        @helper.CSRF.formField
+
+        @helper.inputText(loginForm("username"))
+
+        @helper.inputPassword(loginForm("password"))
+
+        <button class="button" type="submit">Submit</button>
+    }
+}

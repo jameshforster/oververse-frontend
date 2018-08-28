@@ -1,0 +1,17 @@
+@(userDetailsModel: UserDetailsModel, galaxyName: String)(implicit request: Request[_], messagesProvider: MessagesProvider)
+
+@main("Oververse", Some(userDetailsModel), "game", Seq(("map", "Map"))) {
+    <div id="mapSection">
+        <h2>@galaxyName Map</h2>
+        <h3>Current - <span>Northwest</span></h3>
+
+        <button id="quadrant0" disabled onclick="@{s"""selectGalaxyQuadrant("$galaxyName", 0)"""}">Northwest</button>
+        <button id="quadrant1" onclick="@{s"""selectGalaxyQuadrant("$galaxyName", 1)"""}">Northeast</button>
+        <button id="quadrant2" onclick="@{s"""selectGalaxyQuadrant("$galaxyName", 2)"""}">Southwest</button>
+        <button id="quadrant3" onclick="@{s"""selectGalaxyQuadrant("$galaxyName", 3)"""}">Southeast</button>
+
+        <div class="iframe">
+            <iframe class="game" src="@controllers.routes.UniverseController.galaxyMap(galaxyName, 0).url" allowfullscreen></iframe>
+        </div>
+    </div>
+}

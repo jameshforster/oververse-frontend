@@ -1,0 +1,88 @@
+@import models.entities.StarEntity
+@import models.location.Coordinates
+
+@(galaxyModel: GalaxyModel, stars: Seq[StarEntity], userDetailsModel: UserDetailsModel, quadrant: Int)(implicit request: Request[_])
+
+@createXRow(yCoordinate: Int) = {
+    @if(Seq(0, 2).contains(quadrant)) {
+        <td class="table-border">
+            @yCoordinate
+        </td>
+    }
+    @for(xCoordinate <- if (Seq(0, 2).contains(quadrant)) -galaxyModel.size to 0 else 0 to galaxyModel.size ) {
+       <td style="width:@{s"${BigDecimal(1)/(galaxyModel.size + 1) * 100}%"}">
+            @if(stars.exists(_.coordinates == Coordinates(xCoordinate, yCoordinate))){
+                <img class="content" width=@{s"${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.size*2 + 13}px"} src="@{s"/versionedAssets/images/${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.colour.name.toLowerCase}Star.png"}"/>
+            }
+       </td>
+    }
+    @if(Seq(1, 3).contains(quadrant)) {
+        <td class="table-border">
+            @yCoordinate
+        </td>
+    }
+}
+
+@createYRows() = {
+
+    @if(Seq(0, 1).contains(quadrant)) {
+        <tr>
+            @if(quadrant == 0){
+                <td class="table-border"></td>
+            }
+
+            @for(xCoordinate <- if (Seq(0, 2).contains(quadrant)) -galaxyModel.size to 0 else 0 to galaxyModel.size ) {
+                <td class="table-border" width=@{s"${1/(galaxyModel.size + 1) * 100}%"}>
+                    @xCoordinate
+                </td>
+            }
+
+            @if(quadrant == 1){
+                <td class="table-border"></td>
+            }
+        </tr>
+    }
+
+    @for(yCoordinate <- if (Seq(2, 3).contains(quadrant)) 0 to -galaxyModel.size by -1 else galaxyModel.size to 0 by -1 ) {
+        <tr>
+            @createXRow(yCoordinate)
+        </tr>
+    }
+
+    @if(Seq(2, 3).contains(quadrant)) {
+        <tr>
+            @if(quadrant == 2){
+                <td class="table-border"></td>
+            }
+
+            @for(xCoordinate <- if (Seq(0, 2).contains(quadrant)) -galaxyModel.size to 0 else 0 to galaxyModel.size ) {
+                <td class="table-border">
+                    @xCoordinate
+                </td>
+            }
+
+            @if(quadrant == 3) {
+                <td class="table-border"></td>
+            }
+        </tr>
+    }
+}
+
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+ <div class="map">
+    <table width="100%" class="table-map">
+        @createYRows()
+    </table>
+ </div>
+</html>

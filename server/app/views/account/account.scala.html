@@ -1,0 +1,38 @@
+@import helpers.AuthLevelHelper
+@(userDetailsModel: UserDetailsModel, form: Form[UpdateDetailsModel])(implicit request: Request[_], messagesProvider: MessagesProvider)
+
+@main("Account", Some(userDetailsModel), "account", Seq(("myDetails", "My Details"), ("updateDetails", "Update Details"), ("universeDetails", "Active Universes"))) {
+
+    <h2>Account</h2>
+
+    <div id="myDetailsSection">
+        <h3>My Details</h3>
+
+        <p>Name: @userDetailsModel.username</p>
+        <p>Email: @userDetailsModel.email</p>
+        <p>Authorisation Level: @{AuthLevelHelper.levelToString(userDetailsModel.authLevel)}</p>
+    </div>
+
+    <div id="updateDetailsSection" class="hidden">
+       <h3>Update Details</h3>
+
+        @helper.form(controllers.routes.AccountController.updateDetails) {
+
+            @helper.CSRF.formField
+
+            @helper.inputPassword(form("password"))
+
+            @helper.inputPassword(form("newPassword"))
+
+            @helper.inputText(form("newEmail"))
+
+            <button class="button" type="submit">Submit</button>
+        }
+    </div>
+
+    <div id="universeDetailsSection" class="hidden">
+        <h3>Active Universes</h3>
+
+        <p>None exist yet! Whoops :p</p>
+    </div>
+}

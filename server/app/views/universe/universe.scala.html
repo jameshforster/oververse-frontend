@@ -1,0 +1,30 @@
+@(userDetailsModel: Option[UserDetailsModel], galaxyList: Seq[GalaxyModel])(implicit request: Request[_])
+
+@idCreator(name: String) = @{
+    name.toLowerCase.replace(" ", "_")
+}
+
+@galaxyHelper(galaxyModel: GalaxyModel) = @{
+        <div id={s"${idCreator(galaxyModel.galaxyName)}Section"} class="hidden">
+            <h2>{galaxyModel.galaxyName}</h2>
+
+            <p>Size: {galaxyModel.size}</p>
+            <p>{if (galaxyModel.active) "ACTIVE" else "INACTIVE"}</p>
+            {if (galaxyModel.test) <p>TEST MODE</p>}
+            {if (galaxyModel.active && !galaxyModel.test) <a href="#"></a>}
+        </div>
+}
+
+@main("Galaxies", userDetailsModel, "", galaxyList.map(galaxy => (idCreator(galaxy.galaxyName), galaxy.galaxyName))) {
+
+    @for(galaxy <- galaxyList) {
+        @galaxyHelper(galaxy)
+    }
+
+    @{if (galaxyList.isEmpty){
+        <h2>Servers are Inactive</h2>
+
+        <p>Currently all universe servers are down for maintenence.</p>
+        <p>Please try again later.</p>
+    }}
+}

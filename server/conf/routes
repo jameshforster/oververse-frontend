@@ -1,0 +1,27 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                              controllers.Application.index
+GET         /index                         controllers.Application.index
+
+GET         /register                      controllers.LoginController.getRegister
+POST        /register                      controllers.LoginController.postRegister
+
+GET         /login                         controllers.LoginController.getLogin(destination: String)
+POST        /login                         controllers.LoginController.postLogin(destination: String)
+
+GET         /logout                        controllers.LoginController.logout
+
+GET         /account                       controllers.AccountController.getAccount
+POST        /account/update-details        controllers.AccountController.updateDetails
+
+GET         /universe                      controllers.UniverseController.getUniverse
+GET         /galaxy/:galaxyName            controllers.UniverseController.galaxyMap(galaxyName, quadrant: Int)
+
+GET         /game/:galaxyName              controllers.GameController.main(galaxyName: String)
+
+# Prefix must match `play.assets.urlPrefix`
+GET         /assets/*file                  controllers.Assets.at(file)
+GET         /versionedAssets/*file         controllers.Assets.versioned(path="/public", file: Asset)

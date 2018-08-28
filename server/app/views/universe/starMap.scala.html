@@ -1,0 +1,49 @@
+@import models.entities.StarEntity
+@import models.location.Coordinates
+
+@(system: StarSystem, userDetailsModel: UserDetailsModel)(implicit request: Request[_])
+
+@createXRow(yCoordinate: Int) = {
+
+    @for(xCoordinate <- -8 to 8) {
+
+        <td style="width:@{s"${BigDecimal(1)/17 * 100}%"}">
+        @if(xCoordinate == 0 && yCoordinate == 0){
+            <img src="@{s"/versionedAssets/images/${system.stellarObject.asInstanceOf[StarEntity].colour.name.toLowerCase}Star.png"}">
+        }
+
+        @if(){
+            <img class="content" width=@{s"${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.size*2 + 13}px"} src="@{s"/versionedAssets/images/${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.colour.name.toLowerCase}Star.png"}"/>
+        }
+        </td>
+    }
+
+}
+
+@createYRows() = {
+
+    @for(yCoordinate <- 8 to -8 by -1 ) {
+        <tr>
+        @createXRow(yCoordinate)
+        </tr>
+    }
+}
+
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <div class="map">
+        <table width="100%" class="table-map">
+        @createYRows()
+        </table>
+    </div>
+</html>

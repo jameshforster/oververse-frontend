@@ -1,0 +1,67 @@
+.padding-row { padding-top:2rem}
+.hidden { display: none}
+
+table.table-map {
+    background-image: url("/versionedAssets/images/mapBackground.png");
+}
+
+table.table-map td {
+    text-align:center;
+    padding:10px;
+    border: 1px solid blue;
+    position: relative;
+}
+
+td.table-border {
+    background: #062c33;
+    color: white;
+}
+
+td:not(.table-border):after {
+    content: '';
+    display: block;
+    margin-top: 100%;
+}
+
+td .content {
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+}
+
+nav button {
+    clear: both;
+    display: block;
+    margin: 1rem auto;
+    width: 50%;
+}
+
+@media only screen and (min-width:767px) and (max-width:1080px){
+
+    nav button {
+        width: 96%;
+    }
+
+}
+
+iframe.game {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+div.iframe {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+}
+
+div.map {
+    width: 100%;
+    height:0;
+    padding-bottom: 100%;
+}

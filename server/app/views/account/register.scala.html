@@ -1,0 +1,23 @@
+@(registerForm: Form[UserModel])(implicit request: Request[_], messagesProvider: MessagesProvider)
+
+@main("Registration", None) {
+
+    <h2>Register new account</h2>
+
+    <div>
+
+        @helper.form(controllers.routes.LoginController.postRegister()) {
+
+            @helper.CSRF.formField
+
+            @helper.inputText(registerForm("username"))
+
+            @helper.inputText(registerForm("email"))
+
+            @helper.inputPassword(registerForm("password"))
+
+            <button class="button" type="submit">Submit</button>
+        }
+
+    </div>
+}

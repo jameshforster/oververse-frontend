@@ -1,0 +1,9 @@
+@import helpers.HttpStatusHelper
+@(status: Int)
+
+@errorMain("Auth Error") {
+
+    <h2>@status - @{HttpStatusHelper.statusToString(status)}</h2>
+
+    <p>@{HttpStatusHelper.statusMessage(status)}</p>
+}
