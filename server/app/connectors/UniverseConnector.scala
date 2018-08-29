@@ -18,4 +18,8 @@ class UniverseConnector @Inject()(ws: WSClient, appConfig: AppConfig) {
   def getStars(universeQueryRequest: UniverseQueryRequest): Future[WSResponse] = {
     ws.url(appConfig.universeUrl + "/universe/query/star").post(Json.toJson(universeQueryRequest))
   }
+
+  def getSystem(universeQueryRequest: UniverseQueryRequest): Future[WSResponse] = {
+    ws.url(appConfig.universeUrl + "/universe/query/system").post(Json.toJson(universeQueryRequest))
+  }
 }

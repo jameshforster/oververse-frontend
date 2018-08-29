@@ -1,6 +1,7 @@
 @import models.entities.StarEntity
 @import models.location.Coordinates
 
+@import models.entities.PlanetEntity
 @(system: StarSystem, userDetailsModel: UserDetailsModel)(implicit request: Request[_])
 
 @createXRow(yCoordinate: Int) = {
@@ -9,11 +10,11 @@
 
         <td style="width:@{s"${BigDecimal(1)/17 * 100}%"}">
         @if(xCoordinate == 0 && yCoordinate == 0){
-            <img src="@{s"/versionedAssets/images/${system.stellarObject.asInstanceOf[StarEntity].colour.name.toLowerCase}Star.png"}">
+            <img class="content" width="@{system.stellarObject.asInstanceOf[StarEntity].size*5+50}%" src="@{s"/versionedAssets/images/${system.stellarObject.asInstanceOf[StarEntity].colour.name.toLowerCase}Star.png"}">
         }
 
-        @if(){
-            <img class="content" width=@{s"${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.size*2 + 13}px"} src="@{s"/versionedAssets/images/${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.colour.name.toLowerCase}Star.png"}"/>
+        @if(system.majorOrbitals.exists(planet => planet.asInstanceOf[PlanetEntity].orbitalCoordinates == Coordinates(xCoordinate, yCoordinate))){
+            <img class="content" width="@{system.majorOrbitals.find(planet => planet.asInstanceOf[PlanetEntity].orbitalCoordinates == Coordinates(xCoordinate, yCoordinate)).get.asInstanceOf[PlanetEntity].size*5 +25}%" src="@{s"/versionedAssets/images/planet.png"}">
         }
         </td>
     }

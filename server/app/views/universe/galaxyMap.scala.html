@@ -12,7 +12,7 @@
     @for(xCoordinate <- if (Seq(0, 2).contains(quadrant)) -galaxyModel.size to 0 else 0 to galaxyModel.size ) {
        <td style="width:@{s"${BigDecimal(1)/(galaxyModel.size + 1) * 100}%"}">
             @if(stars.exists(_.coordinates == Coordinates(xCoordinate, yCoordinate))){
-                <img class="content" width=@{s"${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.size*2 + 13}px"} src="@{s"/versionedAssets/images/${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.colour.name.toLowerCase}Star.png"}"/>
+                <img class="content" width=@{s"${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.size*4 + 25}%"} src="@{s"/versionedAssets/images/${stars.find(_.coordinates == Coordinates(xCoordinate, yCoordinate)).get.colour.name.toLowerCase}Star.png"}" onclick="@{s"""parent.selectStarSystem("${galaxyModel.galaxyName}", $xCoordinate, $yCoordinate)"""}"/>
             }
        </td>
     }

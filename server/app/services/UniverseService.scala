@@ -2,8 +2,9 @@ package services
 
 import com.google.inject.Inject
 import connectors.UniverseConnector
-import models.GalaxyModel
+import models.{GalaxyModel, StarSystem}
 import models.entities.{Entity, StarEntity}
+import models.location.Coordinates
 import models.requests.UniverseQueryRequest
 import play.api.mvc.RequestImplicits
 
@@ -31,6 +32,14 @@ class UniverseService @Inject()(universeConnector: UniverseConnector) extends Re
           case e: StarEntity => Some(e)
           case _ => None
         }
+      case _ => ???
+    }
+  }
+
+  def getStarSystem(galaxyName: String, coordinates: Coordinates): Future[Option[StarSystem]] = {
+    universeConnector.getSystem(UniverseQueryRequest(galaxyName, "all", galacticCoordinates = Some(coordinates))) map {
+      case r if r.status == 200 =>
+        r.json.as[Seq[StarSystem]].headOption
       case _ => ???
     }
   }

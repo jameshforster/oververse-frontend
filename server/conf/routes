@@ -19,6 +19,7 @@ POST        /account/update-details        controllers.AccountController.updateD
 
 GET         /universe                      controllers.UniverseController.getUniverse
 GET         /galaxy/:galaxyName            controllers.UniverseController.galaxyMap(galaxyName, quadrant: Int)
+GET         /galaxy/:galaxyName/system     controllers.UniverseController.systemMap(galaxyName, x: Int, y: Int)
 
 GET         /game/:galaxyName              controllers.GameController.main(galaxyName: String)
 
