@@ -1,3 +1,4 @@
+@import helpers.AuthLevelHelper
 @(userDetailsModel: Option[UserDetailsModel], galaxyList: Seq[GalaxyModel])(implicit request: Request[_])
 
 @idCreator(name: String) = @{
@@ -11,7 +12,7 @@
             <p>Size: {galaxyModel.size}</p>
             <p>{if (galaxyModel.active) "ACTIVE" else "INACTIVE"}</p>
             {if (galaxyModel.test) <p>TEST MODE</p>}
-            {if (galaxyModel.active && !galaxyModel.test) <a href="#"></a>}
+            {if (!galaxyModel.test || userDetailsModel.exists(_.authLevel >= AuthLevelHelper.moderator)) <a href={controllers.routes.GameController.main(s"${galaxyModel.galaxyName}").url}>Play</a>}
         </div>
 }
 
@@ -22,9 +23,9 @@
     }
 
     @{if (galaxyList.isEmpty){
-        <h2>Servers are Inactive</h2>
+        <h2>No Active Galaxies</h2>
 
-        <p>Currently all universe servers are down for maintenence.</p>
+        <p>Currently all galaxies are either down or inactive.</p>
         <p>Please try again later.</p>
     }}
 }

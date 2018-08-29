@@ -1,0 +1,68 @@
+@import models.entities.PlanetEntity
+
+@(planetEntity: PlanetEntity, userDetailsModel: UserDetailsModel)(implicit request: Request[_])
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <container>
+
+        <div class="row">
+
+            <div class="col center-elements">
+                <h2>@{planetEntity.name}</h2>
+                <img width="@{planetEntity.size *5 + 40}%" src="@{controllers.routes.Assets.versioned("images/planet.png").url}">
+                <button onclick="@{s"""parent.selectStarSystem("${planetEntity.galaxyName}", ${planetEntity.galacticCoordinates.x}, ${planetEntity.galacticCoordinates.y})"""}">Back to System</button>
+            </div>
+
+            <div class="col-4">
+                <div>
+                    <h3>Type</h3>
+                    <p>@{planetEntity.planetType.name}</p>
+                </div>
+                <div>
+                    <h3>Location</h3>
+                    <p>Galactic Coordinates: @{planetEntity.galacticCoordinates.toString}</p>
+                    <p>Orbital Coordinates: @{planetEntity.orbitalCoordinates.toString}</p>
+                    <p>Orbital Distance: @{planetEntity.orbitalCoordinates.distanceFromOrigin().setScale(1, BigDecimal.RoundingMode.HALF_UP)}</p>
+                </div>
+                <div>
+                    <h3>Structure</h3>
+                    <p>Size: @{planetEntity.size}</p>
+                    <p>Geological Activity: @{planetEntity.geologyDescription}</p>
+                </div>
+                <div>
+                    <h3>Atmosphere</h3>
+                    <p>Density: @{planetEntity.atmosphereDescription}</p>
+                    <p>Toxicity: @{planetEntity.toxicityDescription}</p>
+                    <p>Breathable: @{planetEntity.breathable.toString.capitalize}</p>
+                </div>
+                <div>
+                    <h3>Conditions</h3>
+                    <p>Temperature: @{planetEntity.temperatureDescription}</p>
+                    <p>Radioactivity: @{planetEntity.radioactivityDescription}</p>
+                </div>
+                <div>
+                    <h3>Resources</h3>
+                    <p>Minerals: @{planetEntity.mineralsDescription}</p>
+                    <p>Water: @{planetEntity.waterDescription}</p>
+                    <p>Biosphere: @{planetEntity.biosphereDescription}</p>
+                </div>
+                <div>
+                    <h3>Danger Rating</h3>
+                    <p>@{planetEntity.dangerDescription}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </container>
+</html>

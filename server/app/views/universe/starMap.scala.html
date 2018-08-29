@@ -14,7 +14,7 @@
         }
 
         @if(system.majorOrbitals.exists(planet => planet.asInstanceOf[PlanetEntity].orbitalCoordinates == Coordinates(xCoordinate, yCoordinate))){
-            <img class="content" width="@{system.majorOrbitals.find(planet => planet.asInstanceOf[PlanetEntity].orbitalCoordinates == Coordinates(xCoordinate, yCoordinate)).get.asInstanceOf[PlanetEntity].size*5 +25}%" src="@{s"/versionedAssets/images/planet.png"}">
+            <img class="content" width="@{system.majorOrbitals.find(planet => planet.asInstanceOf[PlanetEntity].orbitalCoordinates == Coordinates(xCoordinate, yCoordinate)).get.asInstanceOf[PlanetEntity].size*5 +25}%" src="@{s"/versionedAssets/images/planet.png"}" onclick="@{s"""parent.selectPlanet("${system.stellarObject.galaxyName}", ${system.stellarObject.location.galactic.x}, ${system.stellarObject.location.galactic.y} ,$xCoordinate, $yCoordinate)"""}">
         }
         </td>
     }

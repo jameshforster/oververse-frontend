@@ -20,4 +20,86 @@ case class PlanetEntity(id: String, galaxyName: String, name: String, attributes
   val temperature: Int = attributes.getOrException[Int](Attributes.temperature)
   val planetType: PlanetType = attributes.getOrException[String](Attributes.planetType)
   val children: Option[List[String]] = attributes.getAttribute[List[String]](Attributes.children)
+
+  val atmosphereDescription: String = {
+    atmosphere match {
+      case 0 => "None"
+      case 1 | 2 => "Sparse"
+      case 3 | 4 => "Comfortable"
+      case 5 | 6 => "Dense"
+    }
+  }
+
+  val geologyDescription: String = {
+    geology match {
+      case 0 => "Inactive"
+      case 1 | 2 => "Low"
+      case 3 | 4 => "High"
+      case 5 | 6 => "Unstable"
+    }
+  }
+
+  val toxicityDescription: String = {
+    toxicity match {
+      case 0 => "None"
+      case 1 | 2 => "Low"
+      case 3 | 4 => "High"
+      case 5 | 6 => "Dangerously High"
+    }
+  }
+
+  val temperatureDescription: String = {
+    temperature match {
+      case 0 | 1 => "Dangerously Low"
+      case 2 | 3 | 4 => "Safe"
+      case 5 | 6 => "Dangerously High"
+    }
+  }
+
+  val radioactivityDescription: String = {
+    radioactivity match {
+      case 0 => "None"
+      case 1 | 2 => "Low"
+      case 3 | 4 => "High"
+      case 5 | 6 => "Dangerously High"
+    }
+  }
+
+  val mineralsDescription: String = {
+    minerals match {
+      case 0 => "None"
+      case 1 | 2 => "Low"
+      case 3 | 4 => "High"
+      case 5 | 6 => "Abundant"
+    }
+  }
+
+  val waterDescription: String = {
+    water match {
+      case 0 => "None"
+      case 1 => "Sparse"
+      case 2 | 3 | 4 => "Liveable"
+      case 5 => "Abundant"
+      case 6 => "Oceanic"
+    }
+  }
+
+  val biosphereDescription: String = {
+    biosphere match {
+      case 0 => "None"
+      case 1 | 2 => "Some"
+      case 3 | 4 => "Diverse"
+      case 5 | 6 => "Abundant"
+    }
+  }
+
+  val dangerDescription: String = {
+    danger match {
+      case 0 => "Safe"
+      case 1 | 2 => "Minor Threat"
+      case 3 | 4 => "Major Threat"
+      case 5 | 6 => "Extreme Threat"
+    }
+  }
+
 }

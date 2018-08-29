@@ -10,6 +10,10 @@ case class Coordinates(x: Int, y: Int) {
   def distanceFromPoint(destination: Coordinates): BigDecimal = {
     BigDecimal(Math.sqrt(Math.pow(x - destination.x, 2) + Math.pow(y - destination.y, 2)))
   }
+
+  override def toString: String = {
+    s"($x, $y)"
+  }
 }
 
 object Coordinates {

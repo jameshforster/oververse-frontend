@@ -22,8 +22,7 @@ class UniverseController @Inject()(cc: ControllerComponents,
       universeService.getGalaxyList map { galaxies =>
         val auth = userDetails.map(_.authLevel).getOrElse(50)
         val filteredGalaxies = if (auth >= AuthLevelHelper.admin) galaxies
-        else if (auth >= AuthLevelHelper.moderator) galaxies.filterNot(_.active)
-        else galaxies.filterNot(_.test)
+        else galaxies.filter(_.active)
         Ok(views.html.universe.universe(userDetails, filteredGalaxies))
       }
     }

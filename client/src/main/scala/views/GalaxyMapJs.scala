@@ -2,7 +2,7 @@ package views
 
 import models.NodeListModelHelpers._
 import org.scalajs.dom.raw.HTMLImageElement
-import org.scalajs.dom.{Element, NodeListOf, document, window}
+import org.scalajs.dom.{NodeListOf, document}
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -34,12 +34,17 @@ object GalaxyMapJs {
   @JSExportTopLevel("selectStarSystem")
   def selectStarSystem(galaxyName: String, xCoordinate: Int, yCoordinate: Int): Unit = {
 
-    window.document.querySelectorAll(s"""button[id*="quadrant"]""").asInstanceOf[NodeListOf[HTMLImageElement]].foreach {
+    document.querySelectorAll(s"""button[id*="quadrant"]""").asInstanceOf[NodeListOf[HTMLImageElement]].foreach {
       node => node.removeAttribute("disabled")
     }
 
-    window.document.querySelector("#mapSection h3 span").textContent = s"System (X:$xCoordinate, Y:$yCoordinate)"
+    document.querySelector("#mapSection h3 span").textContent = s"System (X:$xCoordinate, Y:$yCoordinate)"
 
-    window.document.querySelector("#mapSection iframe").setAttribute("src", s"/galaxy/$galaxyName/system?x=$xCoordinate&y=$yCoordinate")
+    document.querySelector("#mapSection iframe").setAttribute("src", s"/galaxy/$galaxyName/system?x=$xCoordinate&y=$yCoordinate")
+  }
+
+  @JSExportTopLevel("selectPlanet")
+  def selectPlanet(galaxyName: String, galX: Int, galY: Int, sysX: Int, sysY: Int): Unit = {
+    document.querySelector("#mapSection iframe").setAttribute("src", s"/galaxy/$galaxyName/planet?galX=$galX&galY=$galY&sysX=$sysX&sysY=$sysY")
   }
 }
