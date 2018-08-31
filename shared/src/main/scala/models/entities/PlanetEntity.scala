@@ -50,9 +50,11 @@ case class PlanetEntity(id: String, galaxyName: String, name: String, attributes
 
   val temperatureDescription: String = {
     temperature match {
-      case 0 | 1 => "Dangerously Low"
-      case 2 | 3 | 4 => "Safe"
-      case 5 | 6 => "Dangerously High"
+      case 0 => "Dangerously Low"
+      case 1 => "Low"
+      case 2 | 3 | 4 => "Optimal"
+      case 5 => "High"
+      case 6 => "Dangerously High"
     }
   }
 
@@ -87,7 +89,7 @@ case class PlanetEntity(id: String, galaxyName: String, name: String, attributes
   val biosphereDescription: String = {
     biosphere match {
       case 0 => "None"
-      case 1 | 2 => "Some"
+      case 1 | 2 => "Sparse"
       case 3 | 4 => "Diverse"
       case 5 | 6 => "Abundant"
     }

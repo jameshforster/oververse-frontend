@@ -47,4 +47,10 @@ object GalaxyMapJs {
   def selectPlanet(galaxyName: String, galX: Int, galY: Int, sysX: Int, sysY: Int): Unit = {
     document.querySelector("#mapSection iframe").setAttribute("src", s"/galaxy/$galaxyName/planet?galX=$galX&galY=$galY&sysX=$sysX&sysY=$sysY")
   }
+
+  @JSExportTopLevel("selectStar")
+  def selectStar(galaxyName: String, x: Int, y: Int): Unit = {
+    document.querySelector("#mapSection iframe").setAttribute("src", s"/galaxy/$galaxyName/star?x=$x&y=$y")
+  }
+
 }

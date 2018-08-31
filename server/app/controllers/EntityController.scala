@@ -33,6 +33,22 @@ class EntityController @Inject()(cc: ControllerComponents,
     }
   }
 
+  def viewStar(galaxyName: String, x: Int, y: Int): Action[AnyContent] = Action.async { implicit request =>
+    universeService.getGalaxyList flatMap { galaxies =>
+      galaxies.find(_.galaxyName == galaxyName).fold[Future[Result]](Future.successful(BadRequest)) {
+        case galaxyModel@GalaxyModel(_, _, true, false) => authService.getUserDetails(AuthLevelHelper.verified) {
+          userDetails => loadStarViewer(galaxyModel, userDetails.get, Coordinates(x, y))
+        }
+        case galaxyModel@GalaxyModel(_, _, true, true) => authService.getUserDetails(AuthLevelHelper.moderator) {
+          userDetails => loadStarViewer(galaxyModel, userDetails.get, Coordinates(x, y))
+        }
+        case galaxyModel => authService.getUserDetails(AuthLevelHelper.admin) {
+          userDetails => loadStarViewer(galaxyModel, userDetails.get, Coordinates(x, y))
+        }
+      }
+    }
+  }
+
   def loadPlanetViewer(galaxyModel: GalaxyModel,
                        userDetails: UserDetailsModel,
                        galacticCoordinates: Coordinates,
@@ -41,6 +57,16 @@ class EntityController @Inject()(cc: ControllerComponents,
       case Some(system) => system.majorOrbitals.find(_.location.system == orbitalCoordinates).fold(BadRequest("")) { planet =>
         Ok(views.html.universe.entityViewers.planetEntityViewer(planet.asInstanceOf[PlanetEntity], userDetails))
       }
+      case _ => BadRequest("")
+    }
+  }
+
+  def loadStarViewer(galaxyModel: GalaxyModel,
+                     userDetailsModel: UserDetailsModel,
+                     coordinates: Coordinates)(implicit request: Request[_]): Future[Result] = {
+    universeService.getStar(galaxyModel.galaxyName, coordinates) map {
+      case Some(star) =>
+        Ok(views.html.universe.entityViewers.starEntityViewer(star, userDetailsModel))
       case _ => BadRequest("")
     }
   }

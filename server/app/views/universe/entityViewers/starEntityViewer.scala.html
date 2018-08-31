@@ -1,0 +1,41 @@
+@import models.entities.StarEntity
+
+@(starEntity: StarEntity, userDetailsModel: UserDetailsModel)(implicit request: Request[_])
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <div class="row">
+
+        <div class="col center-elements">
+            <h2>@{starEntity.name}</h2>
+            <img width="@{starEntity.size *2 + 20}%" src="@{controllers.routes.Assets.versioned(s"images/${starEntity.colour.name.toLowerCase}Star.png").url}">
+            <button onclick="@{s"""parent.selectStarSystem("${starEntity.galaxyName}", ${starEntity.coordinates.x}, ${starEntity.coordinates.y})"""}">Back to System</button>
+        </div>
+
+        <div class="col-4">
+            <div>
+                <h3>Type</h3>
+                <p>@{starEntity.category}</p>
+            </div>
+            <div>
+                <h3>Location</h3>
+                <p>Galactic Coordinates: @{starEntity.coordinates.toString}</p>
+                <p>Galactic Origin Distance: @{starEntity.coordinates.distanceFromOrigin().setScale(1, BigDecimal.RoundingMode.HALF_UP)}</p>
+            </div>
+            <div>
+                <h3>Structure</h3>
+                <p>Size: @{starEntity.size}</p>
+                <p>Colour: @{starEntity.colour.name}</p>
+            </div>
+        </div>
+    </div>
+</html>

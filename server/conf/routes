@@ -21,6 +21,7 @@ GET         /universe                      controllers.UniverseController.getUni
 GET         /galaxy/:galaxyName            controllers.UniverseController.galaxyMap(galaxyName, quadrant: Int)
 GET         /galaxy/:galaxyName/system     controllers.UniverseController.systemMap(galaxyName, x: Int, y: Int)
 GET         /galaxy/:galaxyName/planet     controllers.EntityController.viewPlanet(galaxyName, galX: Int, galY: Int, sysX: Int, sysY: Int)
+GET         /galaxy/:galaxyName/star       controllers.EntityController.viewStar(galaxyName, x: Int, y: Int)
 
 GET         /game/:galaxyName              controllers.GameController.main(galaxyName: String)
 
