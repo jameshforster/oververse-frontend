@@ -1,9 +1,9 @@
 @import helpers.HttpStatusHelper
 @(status: Int)
 
-@errorMain("Auth Error") {
+@errorMain("Universe Error") {
 
     <h2>@status - @{HttpStatusHelper.statusToString(status)}</h2>
 
-    <p>@{HttpStatusHelper.authStatusMessage(status)}</p>
+    <p>@{HttpStatusHelper.universeStatusMessage(status)}</p>
 }

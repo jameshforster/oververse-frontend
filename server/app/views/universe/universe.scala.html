@@ -1,4 +1,3 @@
-@import helpers.AuthLevelHelper
 @(userDetailsModel: Option[UserDetailsModel], galaxyList: Seq[GalaxyModel])(implicit request: Request[_])
 
 @idCreator(name: String) = @{
@@ -12,7 +11,7 @@
             <p>Size: {galaxyModel.size}</p>
             <p>{if (galaxyModel.active) "ACTIVE" else "INACTIVE"}</p>
             {if (galaxyModel.test) <p>TEST MODE</p>}
-            {if (!galaxyModel.test || userDetailsModel.exists(_.authLevel >= AuthLevelHelper.moderator)) <a href={controllers.routes.GameController.main(s"${galaxyModel.galaxyName}").url}>Play</a>}
+            {if (!galaxyModel.test || userDetailsModel.exists(_.authLevel >= UserDetailsModel.moderator)) <a href={controllers.routes.GameController.main(s"${galaxyModel.galaxyName}").url}>Play</a>}
         </div>
 }
 

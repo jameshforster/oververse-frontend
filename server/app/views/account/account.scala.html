@@ -1,4 +1,3 @@
-@import helpers.AuthLevelHelper
 @(userDetailsModel: UserDetailsModel, form: Form[UpdateDetailsModel])(implicit request: Request[_], messagesProvider: MessagesProvider)
 
 @main("Account", Some(userDetailsModel), "account", Seq(("myDetails", "My Details"), ("updateDetails", "Update Details"), ("universeDetails", "Active Universes"))) {
@@ -10,7 +9,7 @@
 
         <p>Name: @userDetailsModel.username</p>
         <p>Email: @userDetailsModel.email</p>
-        <p>Authorisation Level: @{AuthLevelHelper.levelToString(userDetailsModel.authLevel)}</p>
+        <p>Authorisation Level: @{userDetailsModel.levelToString}</p>
     </div>
 
     <div id="updateDetailsSection" class="hidden">

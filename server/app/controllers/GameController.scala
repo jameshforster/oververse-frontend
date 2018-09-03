@@ -1,10 +1,11 @@
 package controllers
 
 import com.google.inject.Inject
-import helpers.AuthLevelHelper
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 import services.{AuthService, UniverseService}
+import models.UserDetailsModel._
+import models.exceptions.UpstreamUniverseException
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -15,16 +16,16 @@ class GameController @Inject()(cc: ControllerComponents,
 
 
   def main(galaxyName: String): Action[AnyContent] = Action.async { implicit request =>
-    authService.authoriseOrLogin(100) { userDetailsModel =>
+    authService.authoriseOrLogin(verified) { userDetailsModel =>
       universeService.getGalaxy(galaxyName) map {
         case Some(galaxy) =>
           val authorised = if (galaxy.active && !galaxy.test) true
-          else if (galaxy.active) userDetailsModel.authLevel > AuthLevelHelper.moderator
-          else userDetailsModel.authLevel > AuthLevelHelper.admin
+          else if (galaxy.active) userDetailsModel.authLevel > moderator
+          else userDetailsModel.authLevel > admin
 
           if (authorised) Ok(views.html.game.mainGame(userDetailsModel, galaxyName))
-          else Forbidden("")
-        case _ => BadRequest("")
+          else throw UpstreamUniverseException(403, s"Insufficient permissions to access $galaxyName")
+        case _ => throw UpstreamUniverseException(400, s"No galaxy of name: $galaxyName found")
       }
     }
   }

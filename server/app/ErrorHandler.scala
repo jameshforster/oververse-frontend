@@ -1,5 +1,5 @@
 import com.google.inject.{Inject, Singleton}
-import models.exceptions.UpstreamAuthException
+import models.exceptions.{UpstreamAuthException, UpstreamUniverseException}
 import play.api.Logger
 import play.api.http.HttpErrorHandler
 import play.api.mvc.{RequestHeader, Result}
@@ -17,8 +17,14 @@ class ErrorHandler @Inject()() extends HttpErrorHandler {
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     exception match {
       case e: UpstreamAuthException => handleAuthException(e)
+      case e: UpstreamUniverseException => handleUniverseException(e)
       case _ => Future.successful(InternalServerError(views.html.exceptions.genericException()))
     }
+  }
+
+  private def handleUniverseException(upstreamUniverseException: UpstreamUniverseException): Future[Result] = {
+    Logger.error(upstreamUniverseException.message, upstreamUniverseException)
+    Future.successful(Status(upstreamUniverseException.status)(views.html.exceptions.universeException(upstreamUniverseException.status)))
   }
 
   private def handleAuthException(upstreamAuthException: UpstreamAuthException): Future[Result] = {
