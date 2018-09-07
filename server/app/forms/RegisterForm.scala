@@ -9,7 +9,7 @@ object RegisterForm {
   val registerForm = Form(
     mapping(
       "username" -> nonEmptyText,
-      "email" -> nonEmptyText,
+      "email" -> email,
       "password" -> nonEmptyText,
       "authLevel" -> optional(number)
         .transform[Int](_.getOrElse(50), value => Some(value)),
