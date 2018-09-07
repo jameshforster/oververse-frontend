@@ -74,7 +74,7 @@ class AuthService @Inject()(authConnector: AuthConnector) extends RequestImplici
     }
   }
 
-  private def updateEmail(updateIndividualDetailModel: UpdateIndividualDetailModel): Future[Boolean] = {
+  private[services] def updateEmail(updateIndividualDetailModel: UpdateIndividualDetailModel): Future[Boolean] = {
     authConnector.updateEmail(updateIndividualDetailModel).map {
       case r if r.status == 204 => true
       case r =>
@@ -83,7 +83,7 @@ class AuthService @Inject()(authConnector: AuthConnector) extends RequestImplici
     }
   }
 
-  private def updatePassword(updateIndividualDetailModel: UpdateIndividualDetailModel): Future[Boolean] = {
+  private[services] def updatePassword(updateIndividualDetailModel: UpdateIndividualDetailModel): Future[Boolean] = {
     authConnector.updatePassword(updateIndividualDetailModel).map {
       case r if r.status == 204 => true
       case r =>

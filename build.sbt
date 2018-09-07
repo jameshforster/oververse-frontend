@@ -10,7 +10,10 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
     "com.vmunier" %% "scalajs-scripts" % "1.1.2",
     guice,
     ws,
-    specs2 % Test
+    specs2 % Test,
+    "org.scalactic" %% "scalactic" % "3.0.5",
+    "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
   ),
   // Compile the project before generating Eclipse files, so that generated .scala or .class files for views and routes are present
   EclipseKeys.preTasks := Seq(compile in Compile)
@@ -32,7 +35,10 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings).enablePlugins(PlayScala)
 lazy val sharedJvm = shared.jvm.settings(
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play-json" % "2.6.7"
+    "com.typesafe.play" %% "play-json" % "2.6.7",
+    "org.scalactic" %% "scalactic" % "3.0.5",
+    "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
   )
 )
 lazy val sharedJs = shared.js

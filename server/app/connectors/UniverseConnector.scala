@@ -7,6 +7,7 @@ import models.requests.UniverseQueryRequest
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton

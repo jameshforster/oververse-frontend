@@ -48,7 +48,10 @@ class UniverseService @Inject()(universeConnector: UniverseConnector) extends Re
   def getStar(galaxyName: String, coordinates: Coordinates): Future[Option[StarEntity]] = {
     universeConnector.getStars(UniverseQueryRequest(galaxyName, "location", galacticCoordinates = Some(coordinates))) map {
       case r if r.status == 200 =>
-        r.json.as[Seq[Entity]].headOption map {_.asInstanceOf[StarEntity]}
+        r.json.as[Seq[Entity]].headOption flatMap {
+          case e: StarEntity => Some(e)
+          case _ => None
+        }
       case r => throw UpstreamUniverseException(r.status, r.body)
     }
   }

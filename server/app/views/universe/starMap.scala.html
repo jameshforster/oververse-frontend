@@ -1,31 +1,29 @@
-@import models.entities.StarEntity
 @import models.location.Coordinates
 
-@import models.entities.PlanetEntity
 @(system: StarSystem, userDetailsModel: UserDetailsModel)(implicit request: Request[_])
 
-@createXRow(yCoordinate: Int, star: StarEntity, planets: Seq[PlanetEntity]) = {
+@createXRow(yCoordinate: Int) = {
 
     @for(xCoordinate <- -8 to 8) {
 
         <td style="width:@{s"${BigDecimal(1)/17 * 100}%"}">
         @if(xCoordinate == 0 && yCoordinate == 0){
-            <img class="content" width="@{star.size*5+50}%" src="@{s"/versionedAssets/images/${star.colour.name.toLowerCase}Star.png"}" onclick="@{s"""parent.selectStar("${star.galaxyName}", ${star.location.galactic.x}, ${star.location.galactic.y})"""}">
+            <img class="content" width="@{system.star.size*5+50}%" src="@{s"/versionedAssets/images/${system.star.colour.name.toLowerCase}Star.png"}" onclick="@{s"""parent.selectStar("${system.star.galaxyName}", ${system.star.location.galactic.x}, ${system.star.location.galactic.y})"""}">
         }
 
-        @if(planets.exists(_.orbitalCoordinates == Coordinates(xCoordinate, yCoordinate))){
-            <img class="content" width="@{planets.find(_.orbitalCoordinates == Coordinates(xCoordinate, yCoordinate)).get.size*5 +25}%" src="@{s"/versionedAssets/images/planet.png"}" onclick="@{s"""parent.selectPlanet("${star.galaxyName}", ${star.location.galactic.x}, ${star.location.galactic.y} ,$xCoordinate, $yCoordinate)"""}">
+        @if(system.planets.exists(_.orbitalCoordinates == Coordinates(xCoordinate, yCoordinate))){
+            <img class="content" width="@{system.planets.find(_.orbitalCoordinates == Coordinates(xCoordinate, yCoordinate)).get.size*5 +25}%" src="@{s"/versionedAssets/images/planet.png"}" onclick="@{s"""parent.selectPlanet("${system.star.galaxyName}", ${system.star.location.galactic.x}, ${system.star.location.galactic.y} ,$xCoordinate, $yCoordinate)"""}">
         }
         </td>
     }
 
 }
 
-@createYRows(planets: Seq[PlanetEntity]) = {
+@createYRows() = {
 
     @for(yCoordinate <- 8 to -8 by -1 ) {
         <tr>
-            @createXRow(yCoordinate, system.stellarObject.asInstanceOf[StarEntity], planets)
+            @createXRow(yCoordinate)
         </tr>
     }
 }
@@ -44,7 +42,7 @@
 
     <div class="map">
         <table width="100%" class="table-map">
-            @createYRows(system.majorOrbitals.collect{case p: PlanetEntity => p})
+            @createYRows()
         </table>
     </div>
 </html>
