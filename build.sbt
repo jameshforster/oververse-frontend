@@ -13,7 +13,8 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
     specs2 % Test,
     "org.scalactic" %% "scalactic" % "3.0.5",
     "org.scalatest" %% "scalatest" % "3.0.5" % Test,
-    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
+    "org.jsoup" % "jsoup" % "1.8.3" % Test
   ),
   // Compile the project before generating Eclipse files, so that generated .scala or .class files for views and routes are present
   EclipseKeys.preTasks := Seq(compile in Compile)
