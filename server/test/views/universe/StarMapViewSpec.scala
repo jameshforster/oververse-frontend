@@ -19,8 +19,8 @@ class StarMapViewSpec extends UnitSpec {
         val body = Jsoup.parse(doc.body)
 
         body.select("tr").size() shouldBe 17
-        for (x <- 0 to 16) {
-          body.select("tr").get(x).select("td").size() shouldBe 17
+        body.select("tr").forEach { row =>
+          row.select("td").size() shouldBe 17
         }
       }
     }
