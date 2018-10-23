@@ -8,10 +8,11 @@ import conf.AppConfig
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, WordSpec}
 import play.api.Configuration
-import play.api.mvc.{ResponseHeader, Result}
+import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.http.HeaderNames._
 import play.api.http.Status._
+import play.api.test.CSRFTokenHelper._
 
 import scala.concurrent.duration.{Duration, SECONDS}
 import scala.concurrent.{Await, Future}
@@ -26,8 +27,11 @@ trait UnitSpec extends WordSpec with Matchers with MockitoSugar {
     override val universeUrl: String = "http://localhost:9002"
   }
 
-  val fakeRequest = FakeRequest()
+  val fakeRequest: FakeRequest[_] = FakeRequest()
   val fakeRequestWithToken: FakeRequest[_] = fakeRequest.withSession("authToken" -> "fakeToken")
+  val fakeRequestWithTokenAndCSRF: RequestHeader = fakeRequestWithToken.withCSRFToken
+
+  def fakePostRequest(parameters: (String, String)*): Request[AnyContentAsFormUrlEncoded] = fakeRequestWithTokenAndCSRF.withBody(fakeRequest.withFormUrlEncodedBody(parameters:_*).body)
 
   def await[T](future: Future[T]): T = {
     Await.result(future, Duration.apply(5, SECONDS))

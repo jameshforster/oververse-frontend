@@ -2,7 +2,7 @@ package conf
 
 import play.api.Configuration
 import org.mockito.Mockito._
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
 import specs.UnitSpec
 
 class AppConfigSpec extends UnitSpec {
@@ -10,16 +10,16 @@ class AppConfigSpec extends UnitSpec {
   def setupAppConfig: AppConfig = {
     val mockConfiguration = mock[Configuration]
 
-    when(mockConfiguration.get[String](Matchers.eq("services.auth.host"))(Matchers.any()))
+    when(mockConfiguration.get[String](ArgumentMatchers.eq("services.auth.host"))(ArgumentMatchers.any()))
         .thenReturn("http://localhost")
 
-    when(mockConfiguration.get[String](Matchers.eq("services.auth.port"))(Matchers.any()))
+    when(mockConfiguration.get[String](ArgumentMatchers.eq("services.auth.port"))(ArgumentMatchers.any()))
       .thenReturn("9001")
 
-    when(mockConfiguration.get[String](Matchers.eq("services.universe.host"))(Matchers.any()))
+    when(mockConfiguration.get[String](ArgumentMatchers.eq("services.universe.host"))(ArgumentMatchers.any()))
       .thenReturn("http://localhost")
 
-    when(mockConfiguration.get[String](Matchers.eq("services.universe.port"))(Matchers.any()))
+    when(mockConfiguration.get[String](ArgumentMatchers.eq("services.universe.port"))(ArgumentMatchers.any()))
       .thenReturn("9002")
 
     new AppConfig(mockConfiguration)

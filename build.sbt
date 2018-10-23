@@ -10,11 +10,11 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
     "com.vmunier" %% "scalajs-scripts" % "1.1.2",
     guice,
     ws,
-    specs2 % Test,
     "org.scalactic" %% "scalactic" % "3.0.5",
     "org.scalatest" %% "scalatest" % "3.0.5" % Test,
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
-    "org.jsoup" % "jsoup" % "1.8.3" % Test
+    "org.jsoup" % "jsoup" % "1.8.3" % Test,
+    "org.mockito" % "mockito-core" % "2.23.0" % Test
   ),
   // Compile the project before generating Eclipse files, so that generated .scala or .class files for views and routes are present
   EclipseKeys.preTasks := Seq(compile in Compile)
@@ -39,7 +39,8 @@ lazy val sharedJvm = shared.jvm.settings(
     "com.typesafe.play" %% "play-json" % "2.6.7",
     "org.scalactic" %% "scalactic" % "3.0.5",
     "org.scalatest" %% "scalatest" % "3.0.5" % Test,
-    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
+    "org.mockito" % "mockito-core" % "2.23.0" % Test
   )
 )
 lazy val sharedJs = shared.js

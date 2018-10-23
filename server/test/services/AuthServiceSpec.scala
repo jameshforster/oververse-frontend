@@ -3,7 +3,7 @@ package services
 import connectors.AuthConnector
 import models._
 import models.exceptions.UpstreamAuthException
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito._
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSResponse
@@ -30,19 +30,19 @@ class AuthServiceSpec extends UnitSpec {
     when(mockResponse.json)
         .thenReturn(json)
 
-    when(mockConnector.authorise(Matchers.any[Int], Matchers.any[String]))
+    when(mockConnector.authorise(ArgumentMatchers.any[Int], ArgumentMatchers.any[String]))
       .thenReturn(response)
 
-    when(mockConnector.login(Matchers.any[LoginModel]))
+    when(mockConnector.login(ArgumentMatchers.any[LoginModel]))
       .thenReturn(response)
 
-    when(mockConnector.register(Matchers.any[UserModel]))
+    when(mockConnector.register(ArgumentMatchers.any[UserModel]))
       .thenReturn(response)
 
-    when(mockConnector.updateEmail(Matchers.any[UpdateIndividualDetailModel]))
+    when(mockConnector.updateEmail(ArgumentMatchers.any[UpdateIndividualDetailModel]))
       .thenReturn(response)
 
-    when(mockConnector.updatePassword(Matchers.any[UpdateIndividualDetailModel]))
+    when(mockConnector.updatePassword(ArgumentMatchers.any[UpdateIndividualDetailModel]))
       .thenReturn(response)
 
     new AuthService(mockConnector)

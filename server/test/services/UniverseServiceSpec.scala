@@ -7,7 +7,7 @@ import models.entities.{Entity, PlanetEntity, StarEntity}
 import models.exceptions.UpstreamUniverseException
 import models.location.Coordinates
 import models.requests.UniverseQueryRequest
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito._
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSResponse
@@ -33,14 +33,14 @@ class UniverseServiceSpec extends UnitSpec {
       }
     }
 
-    when(mockConnector.getStars(Matchers.any[UniverseQueryRequest])).thenReturn {
+    when(mockConnector.getStars(ArgumentMatchers.any[UniverseQueryRequest])).thenReturn {
       errorResponse match {
         case Success(_) => Future.successful(mockResponse)
         case Failure(error) => Future.failed(error)
       }
     }
 
-    when(mockConnector.getSystem(Matchers.any[UniverseQueryRequest])).thenReturn {
+    when(mockConnector.getSystem(ArgumentMatchers.any[UniverseQueryRequest])).thenReturn {
       errorResponse match {
         case Success(_) => Future.successful(mockResponse)
         case Failure(error) => Future.failed(error)
