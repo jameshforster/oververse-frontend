@@ -3,8 +3,8 @@
 # ~~~~
 
 # Home page
-GET         /                              controllers.Application.index
-GET         /index                         controllers.Application.index
+GET         /                              controllers.ApplicationController.index
+GET         /index                         controllers.ApplicationController.index
 
 GET         /register                      controllers.LoginController.getRegister
 POST        /register                      controllers.LoginController.postRegister

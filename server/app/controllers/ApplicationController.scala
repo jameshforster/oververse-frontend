@@ -9,7 +9,7 @@ import models.UserDetailsModel._
 import scala.concurrent.Future
 
 @Singleton
-class Application @Inject()(cc: ControllerComponents, authService: AuthService) extends AbstractController(cc) {
+class ApplicationController @Inject()(cc: ControllerComponents, authService: AuthService) extends AbstractController(cc) {
 
   val index: Action[AnyContent] = Action.async { implicit request =>
     authService.getUserDetails(unverified) { userDetails =>

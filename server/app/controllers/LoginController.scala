@@ -46,6 +46,6 @@ class LoginController @Inject()(cc: ControllerComponents, authService: AuthServi
   }
 
   val logout: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Redirect(controllers.routes.Application.index().url).removingFromSession("authToken"))
+    Future.successful(Redirect(controllers.routes.ApplicationController.index().url).removingFromSession("authToken"))
   }
 }
